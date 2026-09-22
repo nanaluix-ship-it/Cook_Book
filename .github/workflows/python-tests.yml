@@ -20,11 +20,10 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Download and setup Allure CLI
-        run: |
-          curl -o allure.zip https://github.com/allure-framework/allure2/releases/download/2.23.0/allure-2.23.0.zip
-          unzip -q allure.zip
-          echo "$PWD/allure-2.23.0/bin" >> $GITHUB_PATH
+      - name: Setup Allure CLI
+        uses: qiwi/allure-action@v3
+        with:
+          version: '2.23.0'
 
       - name: Set up Python
         uses: actions/setup-python@v5
