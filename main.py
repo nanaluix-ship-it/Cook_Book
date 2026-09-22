@@ -20,13 +20,17 @@ def load_recipes(filename):
 
         ingredients = []
         for _ in range(n):
-            ing = (lines[i].strip().split("|"))
-            ingredients_name = ing[0]
-            quantity = int(ing[1])
-            measure = ing[2]
+            ing = lines[i].strip().split("|")
+            # ВАЖНО: делаем strip() для каждого поля
+            ingredients_name = ing[0].strip()
+            quantity = int(ing[1].strip())
+            measure = ing[2].strip()
             i += 1
-            ingredients.append({'ingredient_name': ingredients_name,
-                                'quantity': quantity, 'measure': measure})
+            ingredients.append({
+                'ingredient_name': ingredients_name,
+                'quantity': quantity,
+                'measure': measure
+            })
 
         # Пропускаем пустую строку-разделитель
         if i < len(lines) and lines[i] == "":
@@ -48,7 +52,7 @@ def get_shop_list_by_dishes(dishes, person_count):
         for ingredient in cook_book[dish]:
             name = ingredient['ingredient_name']
             measure = ingredient['measure']
-            qty_per_person = int(ingredient['quantity'])
+            qty_per_person = ingredient['quantity']
             needed = qty_per_person * person_count
             if name not in shop_list:
                 shop_list[name] = {'measure': measure, 'quantity': needed}
