@@ -1,3 +1,4 @@
 pytest
 coverage
 pylint
+allure-pytest
