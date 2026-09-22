@@ -14,16 +14,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Java (required for Allure CLI)
+      - name: Set up Java (Allure CLI needs Java)
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Allure CLI
-        uses: qiwi/allure-action@v3
-        with:
-          version: '2.23.0'
+      - name: Download Allure CLI 2.23.0
+        run: |
+          # Скачиваем архив напрямую с GitHub Releases
+          curl -L -o allure.zip https://github.com/allure-framework/allure2/releases/download/2.23.0/allure-2.23.0.zip
+          # Проверяем, что это действительно ZIP
+          unzip -t allure.zip > /dev/null || { echo "Downloaded file is not a valid ZIP"; exit 1; }
+          unzip -q allure.zip
+          echo "$PWD/allure-2.23.0/bin" >> $GITHUB_PATH
 
       - name: Set up Python
         uses: actions/setup-python@v5
